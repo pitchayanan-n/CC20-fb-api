@@ -1,8 +1,44 @@
-export function register(req, res, next) {
+import prisma from "../config/prisma.config.js";
+import checkIdentity from "../utils/check-identity.util.js";
+import createError from "../utils/create-error.util.js";
+
+export async function register(req, res, next) {
+  try {
+  const { identity, firstName, lastName, password, confirmPassword } = req.body;
+  // validation
+  if (!(identity.trim() && firstName.trim() && lastName.trim() && password.trim() && confirmPassword.trim())) {
+    createError(400, "Please fill all data")
+  }
+  if (password !== confirmPassword) {
+    createError(400, "Please check confirm password")
+  }
+  // identity เป็น email หรือ mobile phone number : checkIdentity(identity) => String : 'email' | 'mobile'
+  const identityKey = checkIdentity(identity)
+
+  // หา user
+  const foundUser = await prisma.user.findUnique({
+    where: { [identityKey] : identity }
+  });
+  if (foundUser) {
+    createError(409, `Already have this user: ${identity}`)
+  }
+
+  const newUser = {
+    [identityKey] : identity,
+    password : await bcrypt.hash(password, 10),
+    firstName : firstName,
+    lastName : lastName,
+  }
+
+  const result = await prisma.user.create({ data: newUser})
+
   res.json({
     msg: "Register controller",
-    body: req.body,
+    result: result,
   });
+} catch (error) {
+    next(error)
+  }
 }
 
 export const login = (req, res, next) => {
@@ -12,8 +48,11 @@ export const login = (req, res, next) => {
   });
 };
 
-export const getMe = (req, res, next) => {
-  res.json({ msg: "Get me controller" });
+export const getMe = async (req, res, next) => {
+  const numUser = await prisma.user.count();
+  console.log(numUser);
+  createError(403, "Block");
+  res.json({ msg: "Get me controller", numUser });
 };
 
 // export function getMe(name) {

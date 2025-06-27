@@ -82,9 +82,9 @@ export async function registerYup(req, res, next) {
       lastName,
     };
     // const result = await prisma.user.create({ data: newUser });
-    const result = await createUser(newUser);
+    await createUser(newUser);
 
-    res.json({ msg: "Register successful", result });
+    res.json({ message: "Register successful" });
   } catch (err) {
     next(err);
   }
@@ -115,7 +115,7 @@ export const login = async (req, res, next) => {
   const { password: pw, createdAt, updatedAt, ...userData } = foundUser;
 
   res.json({
-    msg: "Login successful",
+    message: "Login successful",
     token: token,
     user: userData,
   });

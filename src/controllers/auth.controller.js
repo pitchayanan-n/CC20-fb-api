@@ -111,6 +111,7 @@ export const login = async (req, res, next) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     algorithm: "HS256",
     expiresIn: "15d",
+    // expiresIn: "7s",
   });
   const { password: pw, createdAt, updatedAt, ...userData } = foundUser;
 

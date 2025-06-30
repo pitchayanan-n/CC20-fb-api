@@ -9,7 +9,7 @@ const userData = [
     lastName: "Codecamp",
     password: hashedPassword,
     email: "andy@ggg.mail",
-    profileImage: "https://www.svgrepo.com/show/420364/avatar-male-man.svg",
+    profileImage: "https://www.svgrepo.com/show/420360/avatar-batman-comics.svg",
   },
   {
     firstName: "Bobby",
@@ -17,14 +17,14 @@ const userData = [
     password: hashedPassword,
     email: "bobby@ggg.mail",
     profileImage:
-      "https://www.svgrepo.com/show/420319/actor-chaplin-comedy.svg",
+      "https://www.svgrepo.com/show/420329/anime-away-face.svg",
   },
   {
     firstName: "Candy",
     lastName: "Codecamp",
     password: hashedPassword,
     mobile: "1111111111",
-    profileImage: "https://www.svgrepo.com/show/420327/avatar-child-girl.svg",
+    profileImage: "https://www.svgrepo.com/show/434124/joker.svg",
   },
   {
     firstName: "Danny",
@@ -32,7 +32,7 @@ const userData = [
     password: hashedPassword,
     mobile: "2222222222",
     profileImage:
-      "https://www.svgrepo.com/show/420314/builder-helmet-worker.svg",
+      "https://www.svgrepo.com/show/18543/superheroe.svg",
   },
 ];
 

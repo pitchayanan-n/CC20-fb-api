@@ -4,7 +4,20 @@ import path from "path";
 import prisma from "../config/prisma.config.js";
 
 export const getAllPosts = async (req, res, next) => {
-  res.json({ message: "Get all post" });
+  const resp = await prisma.post.findMany({
+    orderBy: { createdAt: "desc" },
+    include: {
+      user: {
+        select: {
+          firstName: true,
+          lastName: true,
+          profileImage: true,
+        },
+      },
+    },
+  });
+
+  res.json({ posts: resp });
 };
 
 export const createPost = async (req, res, next) => {
@@ -21,7 +34,7 @@ export const createPost = async (req, res, next) => {
   }
   const data = {
     message: message,
-    image: uploadResult.secure_url,
+    image: uploadResult?.secure_url || "",
     userId: req.user.id,
   };
   const rs = await prisma.post.create({ data });
